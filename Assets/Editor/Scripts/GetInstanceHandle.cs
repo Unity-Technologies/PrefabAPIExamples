@@ -44,4 +44,23 @@ public class GetInstanceHandle
         else
             Debug.Log("No Prefab instance was selected");
     }
+
+    [MenuItem("Prefabs/Are 2 GameObjects Part of same Prefab Instance")]
+    static public void Are2GameObjectFromSameInstance()
+    {
+        if (Selection.gameObjects.Length != 2)
+        {
+            Debug.Log("Please select 2 GameObjects");
+            return;
+        }
+
+        var firstHandle = PrefabUtility.GetPrefabInstanceHandle(Selection.gameObjects[0]);
+        var secondHandle = PrefabUtility.GetPrefabInstanceHandle(Selection.gameObjects[1]);
+
+        if (firstHandle == secondHandle)
+            Debug.Log("GameObject belongs to same instance");
+        else
+            Debug.Log("GameObject are not from the same instance");
+    }
+
 }
