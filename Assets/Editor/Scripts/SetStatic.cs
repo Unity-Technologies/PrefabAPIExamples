@@ -34,7 +34,7 @@ public class SetStatic
             // Write the updated GameObject to the Prefab asset
             PrefabUtility.SaveAsPrefabAsset(assetRoot, path);
 
-            // Clean up is importent or we will leak scenes and
+            // Clean up is important or we will leak scenes and
             // eventually run out of temporary scenes.
             PrefabUtility.UnloadPrefabContents(assetRoot);
         }
