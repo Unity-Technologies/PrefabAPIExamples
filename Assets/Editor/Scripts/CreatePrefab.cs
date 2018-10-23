@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 
 public class CreatePrefab
@@ -40,7 +40,6 @@ public class CreatePrefab
         {
             path = AssetDatabase.GetAssetPath(go);
             go = (GameObject)PrefabUtility.InstantiatePrefab(go); 
-
         }
         else if (isInstance)
         {
