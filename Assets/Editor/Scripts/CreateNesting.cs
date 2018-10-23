@@ -14,6 +14,9 @@ public class CreateNesting
 
         instanceB.GetComponent<Transform>().parent = instanceA.GetComponent<Transform>();
         PrefabUtility.ApplyPrefabInstance(instanceA, InteractionMode.AutomatedAction);
+
+        // Clean up
+        GameObject.DestroyImmediate(instanceA);
     }
 
     [MenuItem("Prefabs/Nesting/NestBInA Via Content")]
@@ -29,6 +32,7 @@ public class CreateNesting
         instanceB.GetComponent<Transform>().parent = root.GetComponent<Transform>();
         PrefabUtility.SaveAsPrefabAsset(root, path);
 
+        // Clean up
         PrefabUtility.UnloadPrefabContents(root);
     }
 }
