@@ -7,7 +7,7 @@ public class SetStatic
 {
     /// The pupose of this script is to set the LightmapStatic
     /// flag on all selected Prefab assets
-    [MenuItem("Prefabs/SetStatic")]
+    [MenuItem("Prefabs/Modify/SetStatic")]
     static void SetStaticFlagOnPrefabs()
     {
         // For performance reasons we disable

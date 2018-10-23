@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class GameObjectType
 {
-    [MenuItem("Prefabs/Get GameObject Info")]
+    [MenuItem("Prefabs/Query/Get GameObject Info")]
     static public void PrintGameObjectInfo()
     {
         var go = Selection.activeGameObject;
@@ -33,8 +33,12 @@ public class GameObjectType
         else
         {
             var prefabStage = UnityEditor.Experimental.SceneManagement.PrefabStageUtility.GetPrefabStage(go);
-            //UnityEditor.Experimental.SceneManagement.PrefabStage.
-            //UnityEditor.Experimental.SceneManagement.PrefabStageUtility.GetPrefabStage;
+            if (prefabStage == null)
+            {
+                Debug.Log("Object is in an unknown stage, object information is currently not available.");
+                return;
+            }
+
             // Prefab stage
         }
     }
