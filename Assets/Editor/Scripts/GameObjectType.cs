@@ -4,7 +4,7 @@ using UnityEditor.SceneManagement;
 
 public class GameObjectType
 {
-    [MenuItem("Prefabs/Get GameObject Info")]
+    [MenuItem("Prefabs/Query/Get GameObject Info")]
     static public void PrintGameObjectInfo()
     {
         var go = Selection.activeGameObject;

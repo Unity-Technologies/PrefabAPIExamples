@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class GetInstanceHandle
 {
-    [MenuItem("Prefabs/Get Instance Handle")]
+    [MenuItem("Prefabs/Query/Get Instance Handle")]
     static public void GetPrefabInstanceHandle()
     {
         var go = Selection.activeGameObject;
@@ -17,7 +17,7 @@ public class GetInstanceHandle
         var handle = PrefabUtility.GetPrefabInstanceHandle(go);
     }
 
-    [MenuItem("Prefabs/Is Selection Part of Same Prefab Instance")]
+    [MenuItem("Prefabs/Query/Is Selection Part of Same Prefab Instance")]
     static public void IsSelectionPartOfSamePrefabInstance()
     {
         if (Selection.gameObjects.Length < 2)
@@ -45,7 +45,7 @@ public class GetInstanceHandle
             Debug.Log("No Prefab instance was selected");
     }
 
-    [MenuItem("Prefabs/Are 2 GameObjects Part of same Prefab Instance")]
+    [MenuItem("Prefabs/Query/Are 2 GameObjects Part of same Prefab Instance")]
     static public void Are2GameObjectFromSameInstance()
     {
         if (Selection.gameObjects.Length != 2)
