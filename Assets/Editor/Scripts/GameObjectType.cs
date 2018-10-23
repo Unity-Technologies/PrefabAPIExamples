@@ -10,14 +10,13 @@ public class GameObjectType
         var go = Selection.activeGameObject;
         if (go == null)
         {
-            Debug.Log("Pleae select a GameObject");
+            Debug.Log("Please select a GameObject");
             return;
         }
 
         var mainStage = StageUtility.GetMainStageHandle();
 
-        // Lets determine which stage we are in first
-        // because Prefab info depends on it
+        // Lets determine which stage we are in first because getting Prefab info depends on it
         var currentStage = StageUtility.GetStageHandle(go);
         if (currentStage == mainStage)
         {
