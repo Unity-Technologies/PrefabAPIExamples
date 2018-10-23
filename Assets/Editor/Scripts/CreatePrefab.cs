@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEditor;
 
 public class CreatePrefab
@@ -11,8 +11,8 @@ public class CreatePrefab
         if (!string.IsNullOrEmpty(path))
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
- 
-            // If you simply want to cube to be written as an asset but not turn in a prefab instance
+
+            // If you simply want the cube to be written as an asset but not turn into a prefab instance
             // use this method
             PrefabUtility.SaveAsPrefabAsset(cube, path);
 
@@ -20,5 +20,36 @@ public class CreatePrefab
             // new prefab asset
             PrefabUtility.SaveAsPrefabAssetAndConnect(cube, path, InteractionMode.AutomatedAction);
         }
+    }
+
+    [MenuItem("Prefabs/Create/Create Variant")]
+    static public void CreatePrefabVariant()
+    {
+        var go = Selection.activeGameObject;
+        if (go == null)
+            return;
+
+        bool isAsset = PrefabUtility.IsPartOfPrefabAsset(go);
+        bool isInstance = PrefabUtility.IsPartOfPrefabInstance(go);
+
+        if (!isAsset && !isInstance)
+            return;
+
+        string path = "";
+        if (isAsset)
+        {
+            path = AssetDatabase.GetAssetPath(go);
+            go = (GameObject)PrefabUtility.InstantiatePrefab(go); 
+
+        }
+        else if (isInstance)
+        {
+            go = PrefabUtility.GetOutermostPrefabInstanceRoot(go);
+            path = AssetDatabase.GetAssetPath(PrefabUtility.GetCorrespondingObjectFromSource(go));
+        }
+
+        var prefabName = System.IO.Path.GetFileNameWithoutExtension(path);
+        path = System.IO.Path.GetDirectoryName(path);
+        PrefabUtility.SaveAsPrefabAsset(go, path + "/" + prefabName + " Variant.prefab");
     }
 }

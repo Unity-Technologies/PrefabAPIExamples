@@ -11,7 +11,6 @@ public class AlwaysUpdate : MonoBehaviour
     [System.NonSerialized]
     public float updateCount = 0;
 
-    // Update is called once per frame
     void Update()
     {
         // Rotate only in playmode
