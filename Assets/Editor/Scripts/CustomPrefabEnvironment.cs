@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
- 
+using UnityEditor.Experimental.SceneManagement; 
  
 [InitializeOnLoad]
 class CustomPrefabEnvironment
 {
     static CustomPrefabEnvironment()
     {
-        PrefabStage.prefabStageOpened += OnPrefabStageOpened;
+        // Uncomment this to dynamically create a plane when entering Prefab Mode
+        //PrefabStage.prefabStageOpened += OnPrefabStageOpened;
     }
  
     static void OnPrefabStageOpened(PrefabStage prefabStage)
