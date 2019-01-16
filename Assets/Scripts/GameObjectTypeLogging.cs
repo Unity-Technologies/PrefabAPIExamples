@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEditor.SceneManagement;
@@ -69,7 +67,7 @@ static public class GameObjectTypeLogging
         }
     }
 
-    static public void LogPrefabInfo(GameObject go)
+    static public void LogPrefabInformation(GameObject go)
     {
         StringBuilder stringBuilder = new StringBuilder();
 

@@ -16,7 +16,7 @@ public class PrefabInfo
             return;
         }
 
-        GameObjectTypeLogging.LogPrefabInfo(go);
+        GameObjectTypeLogging.LogPrefabInformation(go);
     }
 
  
