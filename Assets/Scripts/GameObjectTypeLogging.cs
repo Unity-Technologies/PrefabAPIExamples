@@ -15,7 +15,7 @@ static public class GameObjectTypeLogging
             if (!PrefabUtility.IsPartOfPrefabAsset(go))
             {
                 // If LogGameObjectTypeInformation() is called from OnValidate() the GameObject can be part of the events from the import pipeline for the persistent objects. 
-                Debug.Log("Two events are fired under OnValidate(): First time is when saving objects to .prefab file. Second event is when reading .prefab file during import");
+                Debug.Log("Two events are fired under OnValidate(): First time is when saving cloned objects to .prefab file. Second event is when reading .prefab file objects during import");
             }
             else
             {
