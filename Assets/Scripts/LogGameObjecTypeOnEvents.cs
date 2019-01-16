@@ -7,13 +7,14 @@ public class LogGameObjecTypeOnEvents : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Awake");
-        GameObjectTypeLogging.LogGameObjectInformation(gameObject);
+        GameObjectTypeLogging.LogStageInformation(gameObject);
+        //GameObjectTypeLogging.LogPrefabInfo(gameObject);
     }
 
     private void OnValidate()
     {
         Debug.Log("OnValidate");
-        GameObjectTypeLogging.LogGameObjectInformation(gameObject);
-
+        GameObjectTypeLogging.LogStageInformation(gameObject);
+        //GameObjectTypeLogging.LogPrefabInfo(gameObject);
     }
 }

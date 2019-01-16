@@ -5,7 +5,7 @@ using UnityEditor.Experimental.SceneManagement;
 
 public class GameObjectType
 {
-    [MenuItem("Prefabs/Query/Get GameObject Info")]
+    [MenuItem("Prefabs/Query/Get Stage Info")]
     static void LogSelectedGameObjectInfo()
     {
         var go = Selection.activeGameObject;
@@ -15,6 +15,6 @@ public class GameObjectType
             return;
         }
 
-        GameObjectTypeLogging.LogGameObjectInformation(go);
+        GameObjectTypeLogging.LogStageInformation(go);
     }
 }

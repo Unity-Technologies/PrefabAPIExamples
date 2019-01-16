@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEditor.SceneManagement;
@@ -7,15 +8,14 @@ using UnityEngine;
 
 static public class GameObjectTypeLogging
 {
-    static public void LogGameObjectInformation(GameObject go)
+    static public void LogStageInformation(GameObject go)
     {
         // First check if input GameObject is persistent before checking what stage the GameObject is in 
         if (EditorUtility.IsPersistent(go))
         {
             if (!PrefabUtility.IsPartOfPrefabAsset(go))
             {
-                // If LogGameObjectTypeInformation() is called from OnValidate() the GameObject can be part of the events from the import pipeline for the persistent objects. 
-                Debug.Log("Two events are fired under OnValidate(): First time is when saving cloned objects to .prefab file. Second event is when reading .prefab file objects during import");
+                Debug.Log("The GameObject is a temporary object created during import. OnValidate() is called two times with a temporary object during import: First time is when saving cloned objects to .prefab file. Second event is when reading .prefab file objects during import");
             }
             else
             {
@@ -67,5 +67,84 @@ static public class GameObjectTypeLogging
                 Debug.LogError("Unknown GameObject Info");
             }
         }
+    }
+
+    static public void LogPrefabInfo(GameObject go)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // First check if input GameObject is persistent before checking what stage the GameObject is in 
+        if (EditorUtility.IsPersistent(go))
+        {
+            if (!PrefabUtility.IsPartOfPrefabAsset(go))
+            {
+                stringBuilder.Append("The GameObject is a temporary object created during import. OnValidate() is called two times with a temporary object during import: First time is when saving cloned objects to .prefab file. Second event is when reading .prefab file objects during import");
+            }
+            else
+            {
+                stringBuilder.Append("GameObject is part of an imported Prefab Asset (from the Library folder).\n");
+                stringBuilder.AppendLine("Prefab Asset: " + GetPrefabInfoString(go));
+            }
+
+            Debug.Log(stringBuilder.ToString());
+            return;
+        }
+
+        PrefabStage prefabStage = PrefabStageUtility.GetPrefabStage(go);
+        if (prefabStage != null)
+        {
+            GameObject openPrefabThatContentsIsPartOf = AssetDatabase.LoadAssetAtPath<GameObject>(prefabStage.prefabAssetPath);
+            stringBuilder.AppendFormat(
+                "The GameObject is part of the Prefab contents of the Prefab Asset:\n{0}\n\n",
+                GetPrefabInfoString(openPrefabThatContentsIsPartOf));
+        }
+
+        if (!PrefabUtility.IsPartOfPrefabInstance(go))
+        {
+            stringBuilder.Append("The GameObject is a plain GameObject (not part of a Prefab instance).\n");
+        }
+        else
+        {
+            // This is the Prefab Asset that can be applied to via the Overrides dropdown.
+            GameObject outermostPrefabAssetObject = PrefabUtility.GetCorrespondingObjectFromSource(go);
+            // This is the Prefab Asset that determines the icon that is shown in the Hierarchy for the nearest root.
+            GameObject nearestRootPrefabAssetObject = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(go));
+            // This is the Prefab Asset where the original version of the object comes from.
+            GameObject originalPrefabAssetObject = PrefabUtility.GetCorrespondingObjectFromOriginalSource(go);
+            stringBuilder.AppendFormat(
+@"Prefab Asset of the outermost Prefab instance the input GameObject is part of is:
+{0}
+
+Prefab Asset of the nearest Prefab instance root the input GameObject is part of is:
+{1}
+
+Prefab Asset of the innermost Prefab instance the input GameObject is part of is:
+{2}
+
+Complete nesting chain from outermost to original:
+",
+            GetPrefabInfoString(outermostPrefabAssetObject),
+            GetPrefabInfoString(nearestRootPrefabAssetObject),
+            GetPrefabInfoString(originalPrefabAssetObject));
+
+            GameObject current = outermostPrefabAssetObject;
+            while (current != null)
+            {
+                stringBuilder.AppendLine(GetPrefabInfoString(current));
+                current = PrefabUtility.GetCorrespondingObjectFromSource(current);
+            }
+        }
+
+        stringBuilder.AppendLine("");
+
+        Debug.Log(stringBuilder.ToString());
+    }
+
+    static string GetPrefabInfoString(GameObject prefabAssetGameObject)
+    {
+        string name = prefabAssetGameObject.transform.root.gameObject.name;
+        string assetPath = AssetDatabase.GetAssetPath(prefabAssetGameObject);
+        PrefabAssetType type = PrefabUtility.GetPrefabAssetType(prefabAssetGameObject);
+        return string.Format("<b>{0}</b> (type: {1}) at '{2}'", name, type, assetPath);
     }
 }
