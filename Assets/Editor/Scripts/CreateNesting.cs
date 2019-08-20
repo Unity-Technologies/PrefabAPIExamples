@@ -13,6 +13,7 @@ public class CreateNesting
         var instanceB = (GameObject)PrefabUtility.InstantiatePrefab(goB);
 
         instanceB.GetComponent<Transform>().parent = instanceA.GetComponent<Transform>();
+        PrefabUtility.RecordPrefabInstancePropertyModifications(instanceB.GetComponent<Transform>());
         PrefabUtility.ApplyPrefabInstance(instanceA, InteractionMode.AutomatedAction);
 
         // Clean up
@@ -30,6 +31,7 @@ public class CreateNesting
         var root = PrefabUtility.LoadPrefabContents(path);
 
         instanceB.GetComponent<Transform>().parent = root.GetComponent<Transform>();
+        PrefabUtility.RecordPrefabInstancePropertyModifications(instanceB.GetComponent<Transform>());
         PrefabUtility.SaveAsPrefabAsset(root, path);
 
         // Clean up
